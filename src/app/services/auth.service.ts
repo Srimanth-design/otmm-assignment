@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
 
 export interface LoginResponse {
   session_resource: {
@@ -18,7 +19,7 @@ export interface LoginResponse {
   };
 }
 
-interface OTDSResponse {
+export interface OTDSResponse {
   token: string;
   userId: string;
   ticket: string;
@@ -33,23 +34,38 @@ interface OTDSResponse {
 export class AuthService {
   private otdsUrl = `http://training-otmm.acheron-tech.com:8080/otdsws/rest/authentication/credentials`;
   private retrieveSessionUrl = `http://training-otmm.acheron-tech.com:11090/otmmapi/v6/sessions`;
+  private resourceUrl = `http://training-otmm.acheron-tech.com:8080/otdsws/rest/authentication/resource/ticketforresource`;
 
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string) {
-    this.getOTDSTicket(username, password).subscribe((data) => {
-      localStorage.setItem('otds_ticket', data.ticket);
-      this.getSession(data.ticket).subscribe((value) => {
-        localStorage.setItem('session_id', value.session_resource.session.id);
-      });
-    });
+    this.getOTDSTicket(username, password).pipe(
+      map((data) => data.ticket),
+      map((data) =>
+        this.getResourceTicket(data).pipe(map((value) => value.ticket))
+      ),
+      map((data) =>
+        data.pipe(
+          map((d) => {
+            localStorage.setItem('OTDSToken', d);
+            return this.getSession(d).pipe(
+              map((ddd) =>
+                localStorage.setItem(
+                  'sessionId',
+                  ddd.session_resource.session.id
+                )
+              )
+            );
+          })
+        )
+      )
+    );
   }
 
   private getOTDSTicket(username: string, password: string) {
     return this.http.post<OTDSResponse>(this.otdsUrl, {
       userName: username,
       password,
-      targetResourceId: 'e1332625-4b8e-4e40-94a8-012f81846665',
       ticketType: 'OTDSTICKET',
     });
   }
@@ -63,5 +79,18 @@ export class AuthService {
       headers,
       withCredentials: true,
     });
+  }
+
+  private getResourceTicket(ticket: string): Observable<OTDSResponse> {
+    const headers = new HttpHeaders({
+      OTDSToken: ticket,
+    });
+
+    const body = {
+      ticket,
+      targetResourceId: 'e1332625-4b8e-4e40-94a8-012f81846665',
+    };
+
+    return this.http.post<OTDSResponse>(this.resourceUrl, body, { headers });
   }
 }
