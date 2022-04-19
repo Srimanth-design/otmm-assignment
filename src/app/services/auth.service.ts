@@ -39,27 +39,29 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string) {
-    this.getOTDSTicket(username, password).pipe(
-      map((data) => data.ticket),
-      map((data) =>
-        this.getResourceTicket(data).pipe(map((value) => value.ticket))
-      ),
-      map((data) =>
-        data.pipe(
-          map((d) => {
-            localStorage.setItem('OTDSToken', d);
-            return this.getSession(d).pipe(
-              map((ddd) =>
-                localStorage.setItem(
-                  'sessionId',
-                  ddd.session_resource.session.id
+    this.getOTDSTicket(username, password)
+      .pipe(
+        map((data) => data.ticket),
+        map((data) =>
+          this.getResourceTicket(data).pipe(map((value) => value.ticket))
+        ),
+        map((data) =>
+          data.pipe(
+            map((d) => {
+              localStorage.setItem('ResourceTicket', d);
+              return this.getSession(d).pipe(
+                map((ddd) =>
+                  localStorage.setItem(
+                    'sessionId',
+                    ddd.session_resource.session.id
+                  )
                 )
-              )
-            );
-          })
+              );
+            })
+          )
         )
       )
-    );
+      .subscribe((login) => login.subscribe((ticket) => ticket.subscribe()));
   }
 
   private getOTDSTicket(username: string, password: string) {

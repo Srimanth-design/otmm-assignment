@@ -12,8 +12,8 @@ export class SearchService {
     const url = `${this.baseUrl}keyword_query=${keyword}`;
 
     const headers = new HttpHeaders({
-      'X-Requested-By': localStorage.getItem('session_id')!,
-      OTDSToken: localStorage.getItem('otds_ticket')!,
+      'X-Requested-By': localStorage.getItem('sessionId')!,
+      OTDSToken: localStorage.getItem('ResourceTicket')!,
     });
 
     return this.http.get(url, { headers, withCredentials: true });
