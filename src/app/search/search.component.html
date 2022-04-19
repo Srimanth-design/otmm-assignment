@@ -6,18 +6,10 @@
   <input type="submit" value="Search" />
 </form>
 
-
-
-<!-- <pre>
-  {{result | async | json }}
-</pre> -->
-
-<div *ngFor="let d of myData.search_result_resource.asset_list">
-  
-  <label>Results</label>{{d.name}}<br>
-  <img src="http://training-otmm.acheron-tech.com/">
+<div *ngIf="assets.length">
+  <h2>Results</h2>
+  <div *ngFor="let asset of assets">
+    <h2>{{ asset.asset_content_info.master_content.name }}</h2>
+    <img [src]="asset.rendition_content.thumbnail_content.url" alt="" />
+  </div>
 </div>
-
-
-<!-- 
-<pre>{{myData.search_result_resource.asset_list[1].name | json}}</pre> -->
