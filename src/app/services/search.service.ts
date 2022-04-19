@@ -13,9 +13,9 @@ export class SearchService {
 
     const headers = new HttpHeaders({
       'X-Requested-By': localStorage.getItem('sessionId')!,
-      OTDSToken: localStorage.getItem('ResourceTicket')!,
+      OTDSToken: localStorage.getItem('OTDSTicket')!,
     });
 
-    return this.http.get(url, { headers, withCredentials: true });
+    return this.http.get(url, { headers });
   }
 }
