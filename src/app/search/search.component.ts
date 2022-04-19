@@ -16,10 +16,14 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  myData:any=[]
+  //result:any=null
   onSubmit() {
     this.searchService
       .search(this.searchForm.value.keyword)
       .subscribe((data) => {
+        alert("getting the data");
+        this.myData=data;
         console.log(data);
       });
   }

@@ -1,7 +1,23 @@
 <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
-    <label for="search">Search: </label>
+    <label for="search">Search Keyword: </label>
     <input type="text" name="search" id="search" formControlName="keyword" />
   </div>
   <input type="submit" value="Search" />
 </form>
+
+
+
+<!-- <pre>
+  {{result | async | json }}
+</pre> -->
+
+<div *ngFor="let d of myData.search_result_resource.asset_list">
+  
+  <label>Results</label>{{d.name}}<br>
+  <img src="http://training-otmm.acheron-tech.com/">
+</div>
+
+
+<!-- 
+<pre>{{myData.search_result_resource.asset_list[1].name | json}}</pre> -->
