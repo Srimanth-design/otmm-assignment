@@ -8,7 +8,8 @@ import { AssetList, SearchService } from '../services/search.service';
   styleUrls: ['./search.component.css'],
 })
 export class SearchComponent implements OnInit {
-  assets: AssetList[] = [];
+  assets: any;
+  assetList:any;
 
   baseUrl = 'http://training-otmm.acheron-tech.com:11090';
 
@@ -20,34 +21,30 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  myData:any=[]
+
+  imgUrl:string = "http://training-otmm.acheron-tech.com:11090/";
+  myData:any
   //result:any=null
   onSubmit() {
     this.searchService
       .search(this.searchForm.value.keyword)
       .subscribe((value) => {
-        let v: AssetList[] = value.search_result_resource.asset_list.filter(
-          (item) => !!item.rendition_content
-        );
-
-        v = v.map((item) => {
-          return {
-            asset_content_info: {
-              master_content: {
-                name: item.asset_content_info.master_content.name,
-              },
-            },
-            rendition_content: {
-              thumbnail_content: {
-                url:
-                  this.baseUrl + item.rendition_content.thumbnail_content.url,
-              },
-            },
-          };
-        });
-
-        this.assets = v;
-        console.log(this.assets);
+        console.log(value);
+        this.myData=value;
+        this.assetList = this.myData['search_result_resource']['asset_list']
+        console.log(this.assetList);
+        
       });
+      
+  }
+  // asset = () => {
+  //   if(this.assetClick == false){
+  //     this.folderClick = false;
+  //     this.assetClick = true;
+  //   }
+  // }
+
+  getDetails(){
+
   }
 }

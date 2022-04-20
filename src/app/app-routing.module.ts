@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { SearchComponent } from './search/search.component';
+import { ViewDeatilsComponent } from './view-deatils/view-deatils.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,9 @@ const routes: Routes = [
     path: 'search',
     component: SearchComponent,
   },
+  {
+    path:'viewdetail/:id', component: ViewDeatilsComponent
+  }
 ];
 
 @NgModule({

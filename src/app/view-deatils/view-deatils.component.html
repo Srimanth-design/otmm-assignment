@@ -1,0 +1,28 @@
+
+<h1 style="text-align: center;">Asset Related Data</h1>
+
+<!-- <label>Asset created by : </label>{{data.asset_resource.asset.content_state_user_name}}<br>
+<br>
+<label>State Id: </label>{{data.asset_resource.asset.asset_state_user_id | json}}<br>
+<br>
+<label> State : </label>{{data.asset_resource.asset.asset_state | json}}<br>
+<br>
+<label>Content type: </label>{{data.asset_resource.asset.content_type}}<br>
+<br>
+<label>Last updated date: </label>{{data.asset_resource.asset.asset_state_last_update_date | date }}<br>
+
+<label></label>{{data.asset_resource.asset.metadata_model_id}} -->
+
+<!-- 
+{{data.asset_resource.asset.metadata.metadata_element_list | json }}  -->
+<div *ngIf="values.length">
+    <div *ngFor="let value of values" class="box">
+      <h2>Group Name: {{ value.group_name }}</h2>
+      <div *ngFor="let v of value.results" class="box">
+          <label style="color: black;"></label>
+        <h3 style="color: cadetblue;">Name: {{ v.name }}</h3>
+        <label style="color: black;">Value: </label>
+        <h3 style="color: cadetblue;"> {{ v.value }}</h3>
+      </div>
+    </div>
+  </div>
