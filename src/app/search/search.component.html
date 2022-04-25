@@ -3,27 +3,21 @@
     <label for="search">Search Keyword: </label>
     <input type="text" name="search" id="search" formControlName="keyword" />
   </div>
-  <input type="submit" value="Search" />
+  <input type="submit" [disabled]="searchForm.invalid" mat-raised-button style="background-color: red;" value="Search" />
 </form>
-<!-- 
-{{myData | async |json}} -->
 
-
-
-<div *ngIf="assetList.length">
-  <div>
-  <div *ngFor="let asset of assetList">
-    <div >
+<div class="assets-list" style="padding: 20px;" >
+ 
+  <div *ngFor="let asset of assetList"  >
+    <div class="asset-list">
+      
       <!-- <div *ngIf="asset.type=='com.artesia.container.Container'"></div> -->
       <label>ASSET NAME:</label>
       <h5 style="text-align: left; font-size: large; color: aqua;">{{asset.name}}</h5><br>
-      <img style="height: 120px;" [src]="'http://training-otmm.acheron-tech.com:11090/'+asset.rendition_content.thumbnail_content.url" alt="thumbnail"><br>
+      <img class="asset-img-css" [src]="baseUrl.concat(asset.rendition_content.thumbnail_content.url) | src | async" >
       <label>Type:</label>
-      <h6>{{asset.mime_type}}</h6>
-      <a [routerLink]="['/viewdetail/'+asset.asset_id]" >View Detail</a>
-      <!-- <button (click)=""> Click to view</button> -->
+      <h3>{{asset.mime_type}}</h3>
+      <a [routerLink]="['/viewdetail/'+asset.asset_id]">View Detail</a>
     </div> 
   </div>
-  </div>
-
 </div>

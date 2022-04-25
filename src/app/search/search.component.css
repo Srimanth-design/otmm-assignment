@@ -1,0 +1,16 @@
+.asset-img-css {
+    width: 250px;
+    height: 250px;
+    cursor: pointer;
+  }
+
+  .assets-list{
+      display: flex;
+      flex-wrap: wrap;
+  }
+  .asset-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }

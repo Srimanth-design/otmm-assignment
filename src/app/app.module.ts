@@ -9,13 +9,25 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ViewDeatilsComponent } from './view-deatils/view-deatils.component';
 
+import { RouterModule } from '@angular/router';
+import { SrcPipe } from './src.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SearchComponent, ViewDeatilsComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    SearchComponent,
+    ViewDeatilsComponent,
+    SrcPipe,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    RouterModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -29,7 +29,7 @@ export class SearchComponent implements OnInit {
     this.searchService
       .search(this.searchForm.value.keyword)
       .subscribe((value) => {
-        console.log(value);
+        //console.log(value);
         this.myData=value;
         this.assetList = this.myData['search_result_resource']['asset_list']
         console.log(this.assetList);
